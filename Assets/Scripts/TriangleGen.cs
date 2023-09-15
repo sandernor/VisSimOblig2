@@ -16,8 +16,8 @@ public class TriangleGen : MonoBehaviour
     private char[] vertexDataArray;
     private List<string> line;
     private int lineCount = 0;
-    private List<Vertex> vertexArray;
-    private Vertex v;
+    private List<Vector3> vertexArray;
+    private Vector3 v;
     private Mesh mesh;
     private List<int> triangles;
     private int[] triVerts;
@@ -31,7 +31,7 @@ public class TriangleGen : MonoBehaviour
     private void MeshUpdate()
     {
         mesh.Clear();
-        Vector3[] vertPos = new Vector3[] { vertexArray[0].position, vertexArray[1].position, vertexArray[2].position, vertexArray[3].position, vertexArray[4].position, vertexArray[5].position };
+        Vector3[] vertPos = vertexArray.ToArray();
         mesh.vertices = vertPos;
 
         mesh.triangles = triVerts;
@@ -69,9 +69,9 @@ public class TriangleGen : MonoBehaviour
             y = float.Parse(splitLine[1]);
             z = float.Parse(splitLine[2]);
 
-            v = new Vertex();
-            v.position = new Vector3(x, y, z);
+            v = new Vector3(x, y, z);
             vertexArray.Add(v);
+
             //Debug.Log(v.position);
 
         }
@@ -81,13 +81,14 @@ public class TriangleGen : MonoBehaviour
     {
         int numVertices = int.Parse(line[0]);
         int numTriangles = int.Parse(line[numVertices + 1]);
-        //for (int i = numVertices + 2; i < numVertices + 2 + numTriangles; i+=1)
-        //{
-        //    triangles.Add(int.Parse(line[i]));
-        //    Debug.Log(numTriangles);
-        //}
+        for (int i = numVertices + 2; i < numVertices + 2 + numTriangles; i++)
+        {
+            triangles.Add(int.Parse(line[i]));
+            ///Debug.Log(numTriangles);
+        }
+        triVerts = triangles.ToArray();
 
-        triVerts = new int[] {int.Parse(line[numVertices + 2]), int.Parse(line[numVertices + 3]), int.Parse(line[numVertices + 4]), int.Parse(line[numVertices + 5]), int.Parse(line[numVertices + 6]), int.Parse(line[numVertices + 7]), int.Parse(line[numVertices + 8]), int.Parse(line[numVertices + 9]), int.Parse(line[numVertices + 10]), int.Parse(line[numVertices + 11]), int.Parse(line[numVertices + 12]), int.Parse(line[numVertices + 13])};
+        //triVerts = new int[] {int.Parse(line[numVertices + 2]), int.Parse(line[numVertices + 3]), int.Parse(line[numVertices + 4]), int.Parse(line[numVertices + 5]), int.Parse(line[numVertices + 6]), int.Parse(line[numVertices + 7]), int.Parse(line[numVertices + 8]), int.Parse(line[numVertices + 9]), int.Parse(line[numVertices + 10]), int.Parse(line[numVertices + 11]), int.Parse(line[numVertices + 12]), int.Parse(line[numVertices + 13])};
 
         //for (int i = 0; i < lineCount; i++)
         //{
@@ -99,7 +100,7 @@ public class TriangleGen : MonoBehaviour
     private void Start()
     {
         line = new List<string> ();
-        vertexArray = new List<Vertex>();
+        vertexArray = new List<Vector3>();
         triangles = new List<int> ();
         FileToLines();
         GenerateVertices();
