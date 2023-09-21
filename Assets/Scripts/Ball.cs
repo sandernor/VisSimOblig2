@@ -7,7 +7,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     private float g = -9.81f;
-    private float m = 0.005f;
+    private float m = 0.05f;
     private float G;
 
     //private float oldVel;
@@ -57,9 +57,9 @@ public class Ball : MonoBehaviour
 
         }
         else N = Vector3.zero;
-        Debug.DrawRay(transform.position, N*2000f, Color.red);
+        Debug.DrawRay(transform.position, N * 2000f, Color.red);
         newVel = newVel + N;
-        newPos = prevPos + newVel * Time.fixedDeltaTime;
+        newPos = newVel * Time.fixedDeltaTime;
         prevPos = newPos;
         curVel = newVel;
         prevPos = newPos;
