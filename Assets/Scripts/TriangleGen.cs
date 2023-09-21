@@ -48,6 +48,10 @@ public class TriangleGen : MonoBehaviour
     private void Awake()
     {
         mesh = GetComponent<MeshFilter>().mesh;
+        line = new List<string>();
+        vertexArray = new List<Vector3>();
+        triangles = new List<int>();
+        tris = new Triangle[4];
     }
 
     private void MeshUpdate()
@@ -159,11 +163,6 @@ public class TriangleGen : MonoBehaviour
 
     private void Start()
     {
-        line = new List<string> ();
-        vertexArray = new List<Vector3>();
-        triangles = new List<int> ();
-        tris = new Triangle[4];
-
         FileToLines();
         GenerateVertices();
         GenerateTriangles();
