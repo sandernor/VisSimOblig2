@@ -67,14 +67,14 @@ public class TriangleGen : MonoBehaviour
     {
         string data = vertexData.ToString();
 
-        System.IO.StreamReader file = new System.IO.StreamReader(Application.dataPath + "/VertexData.txt");
+        System.IO.StreamReader file = new System.IO.StreamReader(Application.dataPath + "/VertexData2.txt");
 
         while (file.ReadLine() != null)
         {
             lineCount += 1;
         }
 
-        System.IO.StreamReader file2 = new System.IO.StreamReader(Application.dataPath + "/VertexData.txt");
+        System.IO.StreamReader file2 = new System.IO.StreamReader(Application.dataPath + "/VertexData2.txt");
 
         for (int i = 0; i < lineCount; i++)
         {
@@ -133,22 +133,6 @@ public class TriangleGen : MonoBehaviour
 
     }
 
-    private void CalcNorms()
-    {
-        Vector3 NT0 = CrossProduct((vertexArray[0] - vertexArray[1]), (vertexArray[0] - vertexArray[2]));
-        Vector3 NT1 = CrossProduct((vertexArray[1] - vertexArray[2]), (vertexArray[1] - vertexArray[3]));
-        Vector3 NT2 = CrossProduct((vertexArray[2] - vertexArray[3]), (vertexArray[2] - vertexArray[4]));
-        Vector3 NT3 = CrossProduct((vertexArray[2] - vertexArray[4]), (vertexArray[2] - vertexArray[5]));
-        ball.Nt1 = NT0;
-        ball.Nt2 = NT1;
-        ball.Nt3 = NT2;
-        ball.Nt4 = NT3;
-        //float angle1 = Mathf.Asin(10.9f / 40f);
-        //float angle2 = Mathf.Asin(7.9f / 40f);
-        //float angle3 = Mathf.Asin(7.9f / 40f);
-        //float angle4 = Mathf.Asin(7.8f / 40f);
-    }
-
     public Vector3 CrossProduct(Vector3 v1, Vector3 v2)
     {
         float x, y, z;
@@ -167,7 +151,6 @@ public class TriangleGen : MonoBehaviour
         GenerateVertices();
         GenerateTriangles();
         MeshUpdate();
-        CalcNorms();
         //Debug.Log(triVerts.Length);
     }
 
