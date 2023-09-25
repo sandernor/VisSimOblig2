@@ -65,7 +65,7 @@ public class Ball : MonoBehaviour
     private bool Grounded()
     {
         Vector3 P = transform.position;
-        float r = 0.025f;
+        float r = 0.02f;
         Vector3 C = genScript.tris[WhatTri()].vertices[0];
         Vector3 norm = Normal(genScript.tris[WhatTri()].vertices[0], genScript.tris[WhatTri()].vertices[1], genScript.tris[WhatTri()].vertices[2]);
         Vector3 y = Vector3.Dot(P - C, norm) * norm;
