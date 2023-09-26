@@ -141,7 +141,7 @@ public class TriangleGen : MonoBehaviour
         z = v1.x * v2.y - v2.x * v1.y;
 
         Vector3 xvec = new Vector3(x, y, z);
-        xvec = xvec.normalized; //optional
+        xvec = xvec.normalized;
         return xvec;
     }
 

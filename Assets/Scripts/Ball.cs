@@ -23,6 +23,8 @@ public class Ball : MonoBehaviour
     private TriangleGen genScript;
 
     private Vector3 pos;
+    float time;
+    bool check = false;
 
     RaycastHit hit;
 
@@ -32,28 +34,40 @@ public class Ball : MonoBehaviour
         curVel = new Vector3(0f, G, 0f);
         acceleration = new Vector3(0f, G, 0f);
         genScript = triGen.GetComponent("TriangleGen") as TriangleGen;
+
     }
     private void FixedUpdate()
     {
+        time += Time.fixedDeltaTime;
+
         transform.position += calcPos();
+
+        if (time > 2f && check == false)
+        {
+            Debug.Log("NormalVektor : " + Vector3.Dot(Normal(genScript.tris[WhatTri()].vertices[0], genScript.tris[WhatTri()].vertices[1], genScript.tris[WhatTri()].vertices[2]), -newVel) * Normal(genScript.tris[WhatTri()].vertices[0], genScript.tris[WhatTri()].vertices[1], genScript.tris[WhatTri()].vertices[2]) + "Akselerasjon : " + acceleration + "Hastighet : " + newVel + "Posisjon i trekant : " + baryCoords(genScript.tris[WhatTri()].vertices[0], genScript.tris[WhatTri()].vertices[1], genScript.tris[WhatTri()].vertices[2], transform.position));
+            check = true;
+        }
         //Debug.Log(curVel.ToString());
     }
 
     private Vector3 calcPos()
     {
-        Debug.Log(WhatTri());
+        //Debug.Log(WhatTri());
         newVel = curVel + acceleration * Time.fixedDeltaTime;
         if (WhatTri() != -1)
         {
             N = Vector3.Dot(Normal(genScript.tris[WhatTri()].vertices[0], genScript.tris[WhatTri()].vertices[1], genScript.tris[WhatTri()].vertices[2]), -newVel) * Normal(genScript.tris[WhatTri()].vertices[0], genScript.tris[WhatTri()].vertices[1], genScript.tris[WhatTri()].vertices[2]);
             prevN = N;
+
         }
+        //Debug.Log("2 : " + newVel);
         Debug.DrawRay(transform.position, N * 2000f, Color.red);
         if (WhatTri() != -1) 
         {
             if (Grounded())
             {
                 newVel = newVel + N;
+                //Debug.Log("1 : " + newVel);
             }
         }
 
